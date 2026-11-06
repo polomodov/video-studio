@@ -77,3 +77,8 @@ Podcast rendering was validated with the pinned FFmpeg 8.1.2 on Apple Silicon.
 Its `scale:reset_sar` requirement is checked with that runtime in macOS CI; the
 Ubuntu system-FFmpeg check remains the shorts smoke test. This does not claim a
 full Linux Whisper/Codex pipeline or a production-length podcast export.
+
+The [combined-editor CI run](https://github.com/polomodov/video-studio/actions/runs/42179910437)
+passed on both Linux and macOS, including the podcast smoke under the pinned
+mise runtime on macOS. Both original Apollo entry points also launched the
+published checkout under its new name with isolated synthetic projects.

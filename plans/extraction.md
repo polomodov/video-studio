@@ -69,5 +69,5 @@ extraction: separate APIs/project formats, shared pinned tools, two portable ski
 - Runtime and sidecar migration behavior: complete and locally verified.
 - Podcast synthetic media/export/HTTP verification: complete.
 - Combined Node tests: 68 pass; both skills validated.
-- Publication of both editors and updated CI: awaiting this change's push.
-- Apollo PR #389 updated to remove both maintained copies: in progress.
+- Publication of both editors: complete at commit `0826def`; [combined CI](https://github.com/polomodov/video-studio/actions/runs/42179910437) passed.
+- [Apollo PR #389](https://github.com/polomodov/apollo-robotics/pull/389) contains the two compatibility entry points and removes duplicate implementations; review/merge remains a separate maintainer action.
