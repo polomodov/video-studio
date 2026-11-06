@@ -40,8 +40,8 @@ readiness from a synthetic test.
 | Extraction | No runtime link to the editorial repository or private runtime | Complete |
 | Docs and skill | A new user can follow setup and find the editing workflow | Complete |
 | Verification | Unit/HTTP tests and real captioned FFmpeg export pass | Complete |
-| Publication | Public source-only repository, license, CI and clone verified | Pending |
-| Original-repo migration | Launcher/skill route to the standalone checkout | Implemented; awaiting PR |
+| Publication | Public source-only repository, license, CI and clone verified | Complete |
+| Original-repo migration | Launcher/skill route to the standalone checkout | Implemented and tested; PR #389 open |
 
 ## Validation
 
@@ -55,4 +55,6 @@ synthetic fixtures from real ASR and model selection.
 
 - [Public repository](https://github.com/polomodov/shorts-studio)
 - [Source mise PR](https://github.com/polomodov/apollo-robotics/pull/387)
-- Original-repository migration PR: pending publication.
+- [Original-repository migration PR #389](https://github.com/polomodov/apollo-robotics/pull/389) (open, not merged).
+- [Initial commit](https://github.com/polomodov/shorts-studio/commit/7193c9d30b3ca0c38a4b22128a68bf9cf51d4cea).
+- [CI verification](https://github.com/polomodov/shorts-studio/actions/runs/42173051612): Linux/macOS tests and Linux render passed.

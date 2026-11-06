@@ -44,7 +44,10 @@ versions must support the isolation flags in `src/codex.mjs`.
 ## Platform and coverage limits
 
 The macOS lock includes Intel artifacts, but Intel execution has not been
-tested. The CI workflow runs Node tests on Linux and macOS and the synthetic
-FFmpeg check on Linux; check the current Actions run for its actual result.
+tested. The [initial CI run](https://github.com/polomodov/shorts-studio/actions/runs/42173051612)
+passed Node tests on Linux and macOS and the synthetic FFmpeg check on Linux.
+A fresh public clone was started through the original repository’s compatibility
+launcher with an isolated synthetic data root; checkout discovery and local-tool
+fallback worked without moving existing user data.
 Native Windows is unsupported. No user recording, transcript, model weight,
 authentication material, or generated MP4 is included in the repository.
