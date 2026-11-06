@@ -1,4 +1,4 @@
-# Initial extraction validation
+# Extraction validation
 
 Checked on 2026-11-06 on macOS Apple Silicon. These results describe the initial
 source extraction, not a benchmark or a claim of editorial quality.
@@ -44,10 +44,36 @@ versions must support the isolation flags in `src/codex.mjs`.
 ## Platform and coverage limits
 
 The macOS lock includes Intel artifacts, but Intel execution has not been
-tested. The [initial CI run](https://github.com/polomodov/shorts-studio/actions/runs/42173051612)
+tested. The [initial CI run](https://github.com/polomodov/video-studio/actions/runs/42173051612)
 passed Node tests on Linux and macOS and the synthetic FFmpeg check on Linux.
 A fresh public clone was started through the original repository’s compatibility
 launcher with an isolated synthetic data root; checkout discovery and local-tool
 fallback worked without moving existing user data.
 Native Windows is unsupported. No user recording, transcript, model weight,
 authentication material, or generated MP4 is included in the repository.
+
+## Podcast editor and broader project name
+
+The user included the existing long-form podcast editor and approved Video Studio.
+The GitHub repository was renamed in place. The combined Node suite has 68 passing
+tests (58 for shorts and 10 for podcast editing/launch), including new sidecar
+compatibility and process-lock checks. Both portable agent skills validate.
+
+A real podcast smoke test generated two camera files at 25/60 fps and external WAV
+files at 440/880 Hz. HTTP save/reopen preserved two clips and their audio offsets.
+Invalid WAV ranges, foreign origins, invalid byte ranges and concurrent renders
+were rejected. No user recording or sidecar was involved.
+
+- Junction preview: 8.000 seconds, 960×540, 30 fps, H.264/AAC.
+- Full edit: 10.066667 seconds, 1920×1080, 30 fps, H.264/AAC.
+- Both exports fully decoded. Decoded audio samples switched from 440 to 880 Hz
+  across the cut with nonzero signal energy.
+- Browser checks showed source playback and rendered junction playback reaching
+  its end. The podcast screenshot contains only these synthetic sources.
+- The Apollo podcast compatibility command passed nine isolated groups of checks;
+  the shorts launcher passed eight before the naming alias extension.
+
+Podcast rendering was validated with the pinned FFmpeg 8.1.2 on Apple Silicon.
+Its `scale:reset_sar` requirement is checked with that runtime in macOS CI; the
+Ubuntu system-FFmpeg check remains the shorts smoke test. This does not claim a
+full Linux Whisper/Codex pipeline or a production-length podcast export.

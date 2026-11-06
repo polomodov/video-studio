@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video Studio — монтаж подкаста</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body>
+  <header>
+    <div><p class="eyebrow">VIDEO STUDIO / ПОДКАСТ</p><h1 id="title">Монтаж подкаста</h1></div>
+    <div class="actions">
+      <button id="save" type="button">Сохранить проект</button>
+      <button id="export" class="primary" type="button">Экспорт MP4</button>
+    </div>
+  </header>
+  <main>
+    <p id="message" role="status" hidden></p>
+    <details id="warnings" hidden><summary>Сообщения об исходниках и проекте</summary><ul></ul></details>
+    <div class="workspace">
+      <section class="monitor" aria-label="Просмотр исходника">
+        <video id="player" controls playsinline preload="metadata"></video>
+        <audio id="audio" preload="metadata"></audio>
+        <div class="transport">
+          <label>Позиция <input id="seek" type="text" value="00:00:00.000" aria-label="Таймкод перехода"></label>
+          <button id="go" type="button">Перейти</button>
+          <output id="position" aria-label="Текущая позиция">00:00:00.000</output>
+          <button id="play-range" type="button">Смотреть диапазон</button>
+        </div>
+      </section>
+      <section class="inspector">
+        <div class="section-head"><h2 id="inspector-title">Новый клип</h2><button id="new" type="button">+ Новый</button></div>
+        <label>Видео <select id="source"></select></label>
+        <p id="source-info" class="muted"></p>
+        <div class="fields">
+          <label>Вход <input id="in" type="text"></label>
+          <button id="mark-in" type="button">По курсору</button>
+          <label>Выход <input id="out" type="text"></label>
+          <button id="mark-out" type="button">По курсору</button>
+        </div>
+        <label>Звук <select id="sound"></select></label>
+        <label id="audio-field" hidden>Вход во внешний WAV <input id="audio-in" type="text"></label>
+        <div class="actions">
+          <button id="apply" class="primary" type="button">Добавить в сборку</button>
+          <button id="split" type="button" disabled>Разрезать по курсору</button>
+        </div>
+      </section>
+    </div>
+    <section class="assembly">
+      <div class="section-head">
+        <div><p class="eyebrow">ПОЛНЫЙ ВЫПУСК</p><h2>Сборка</h2></div>
+        <output id="total"></output>
+      </div>
+      <p id="empty" class="muted">Выберите исходник, отметьте вход и выход и добавьте первый клип.</p>
+      <ol id="clips"></ol>
+    </section>
+    <section id="job" class="assembly" hidden aria-label="Рендер">
+      <div class="section-head"><h2 id="job-title">Рендер</h2><output id="job-status" role="status"></output></div>
+      <progress id="progress" max="1" value="0"></progress>
+      <video id="result" controls playsinline preload="metadata" hidden></video>
+      <a id="download" hidden>Скачать MP4</a>
+    </section>
+  </main>
+</body>
+</html>

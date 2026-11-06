@@ -4,7 +4,7 @@ Resolve the application checkout as described in `SKILL.md`. Commands here run f
 
 ## Runtime and an existing server
 
-- Default data root: `~/.cache/shorts-studio`; jobs: `jobs/<id>/job.json`; reusable geometry: `layout-templates.json`. `--root` overrides the data directory. Do not confuse checkout location (`SHORTS_STUDIO_DIR`, used by this skill) with job storage (`--root`, used by the application).
+- Default data root: `~/.cache/shorts-studio`; jobs: `jobs/<id>/job.json`; reusable geometry: `layout-templates.json`. `--root` overrides the data directory. Do not confuse checkout location (`VIDEO_STUDIO_DIR`, with `SHORTS_STUDIO_DIR` as a legacy alias, used by this skill) with job storage (`--root`, used by the application).
 - `./start.command` starts the server, normally on `http://127.0.0.1:4317/`. Use the URL actually printed. With a macOS mise install, trust the reviewed checkout config before first launch. The launcher locates mise; it does not activate the caller's shell.
 - For CLI commands use `mise exec -- node src/cli.mjs ...` on macOS with mise, or `node src/cli.mjs ...` with local tools. `--help` lists supported operations.
 - One writer owns each root. If a server is running, use its API/UI. Do not delete its lock or launch a concurrent CLI import. Before restarting, wait for queued work and save unsaved browser edits. Do not interrupt unrelated Studio instances.

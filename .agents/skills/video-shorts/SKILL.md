@@ -1,9 +1,9 @@
 ---
 name: video-shorts
-description: "Prepare and edit captioned vertical clips from local talks, interviews, or podcasts using Shorts Studio. Use for transcript-based candidate selection, framing, caption correction, and MP4/SRT export; not for a text-only summary of a video."
+description: "Prepare and edit captioned vertical clips from local talks, interviews, or podcasts using Video Studio. Use for transcript-based candidate selection, framing, caption correction, and MP4/SRT export; not for a text-only summary of a video."
 ---
 
-# Video clips with Shorts Studio
+# Video clips with Video Studio
 
 Use the existing Studio workflow: timed transcript → suggested candidates → user selection/editing → local FFmpeg export. Video stays local; Codex receives the transcript text and recording title using its existing CLI login. The UI and default recognition/selection currently target Russian recordings.
 
@@ -11,8 +11,8 @@ Use the existing Studio workflow: timed transcript → suggested candidates → 
 
 Read applicable `AGENTS.md`. Resolve the application checkout in this order:
 
-1. `SHORTS_STUDIO_DIR`, when supplied, must be the absolute path to the checkout.
-2. The current working repository, if it contains `src/cli.mjs` and the Shorts Studio package.
+1. `VIDEO_STUDIO_DIR`, or the legacy `SHORTS_STUDIO_DIR` alias, when supplied, must be the absolute path to the checkout. Prefer `VIDEO_STUDIO_DIR` if both are set.
+2. The current working repository, if it contains `src/cli.mjs` and the Video Studio package.
 3. The repository containing this skill, when loaded from its canonical `.agents/skills/video-shorts` directory.
 
 Verify `src/cli.mjs`, `start.command`, and `docs/setup.md` exist in that checkout. This skill can be installed separately; its own directory is not always the application. If the checkout is unavailable, request its location or follow the user's instruction to install it. Do not assume a sibling repository, scan unrelated personal directories, or invent a missing tool.

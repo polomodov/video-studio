@@ -1,4 +1,4 @@
-# Standalone Shorts Studio extraction
+# Video Studio extraction
 
 ## Purpose and proportionality
 
@@ -23,7 +23,7 @@ readiness from a synthetic test.
 
 ## Decisions, open questions and dependencies
 
-- Confirmed public repository: `polomodov/shorts-studio`.
+- Confirmed public repository: `polomodov/video-studio` (renamed from shorts-studio).
 - Confirmed license: MIT for original code; external tools retain their licenses.
 - Existing Node 24.22.2 / FFmpeg 8.1.2 macOS lock is retained.
 - New data defaults to `~/.cache/shorts-studio`; old data can be opened with `--root`.
@@ -53,8 +53,21 @@ synthetic fixtures from real ASR and model selection.
 
 ## Change links
 
-- [Public repository](https://github.com/polomodov/shorts-studio)
+- [Public repository](https://github.com/polomodov/video-studio)
 - [Source mise PR](https://github.com/polomodov/apollo-robotics/pull/387)
 - [Original-repository migration PR #389](https://github.com/polomodov/apollo-robotics/pull/389) (open, not merged).
-- [Initial commit](https://github.com/polomodov/shorts-studio/commit/7193c9d30b3ca0c38a4b22128a68bf9cf51d4cea).
-- [CI verification](https://github.com/polomodov/shorts-studio/actions/runs/42173051612): Linux/macOS tests and Linux render passed.
+- [Initial commit](https://github.com/polomodov/video-studio/commit/7193c9d30b3ca0c38a4b22128a68bf9cf51d4cea).
+- [CI verification](https://github.com/polomodov/video-studio/actions/runs/42173051612): Linux/macOS tests and Linux render passed.
+
+## Confirmed scope extension
+
+The user included both existing editors and approved Video Studio as the shared
+name. The podcast source snapshot is `apollo-robotics@e487493b3382943e10185ba015042daebe5860c2`.
+See [ADR 0002](../docs/adr/0002-two-editors-in-video-studio.md). Scope remains a bounded
+extraction: separate APIs/project formats, shared pinned tools, two portable skills.
+
+- Runtime and sidecar migration behavior: complete and locally verified.
+- Podcast synthetic media/export/HTTP verification: complete.
+- Combined Node tests: 68 pass; both skills validated.
+- Publication of both editors and updated CI: awaiting this change's push.
+- Apollo PR #389 updated to remove both maintained copies: in progress.

@@ -39,7 +39,7 @@ const request = async (route, method = 'GET', data) => {
   return response;
 };
 try {
-  assert.match(await (await request('/')).text(), /Shorts/);
+  assert.match(await (await request('/')).text(), /Video Studio/);
   await request(`/api/jobs/${imported.id}/analyze`, 'POST', {});
   let job = await studio.idle(imported.id);
   assert.equal(job.error, null);

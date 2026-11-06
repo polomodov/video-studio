@@ -24,10 +24,18 @@ jobs:
         run: |
           python scripts/transcribe_media.py --help
           python .agents/skills/video-shorts/scripts/normalize_transcript.py --help
-          bash -n start.command scripts/setup_whisper.sh
+          bash -n start.command start-podcast.command scripts/setup_whisper.sh
       - name: Install FFmpeg for the synthetic integration test
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
       - name: Render and decode synthetic captioned video
         if: runner.os == 'Linux'
         run: npm run smoke
+      - name: Install the locked macOS media runtime
+        if: runner.os == 'macOS'
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3
+        with:
+          version: '2026.11.2'
+      - name: Render podcast edit and junction with the pinned runtime
+        if: runner.os == 'macOS'
+        run: mise exec -- npm run smoke:podcast

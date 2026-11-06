@@ -1,28 +1,28 @@
 # Setup and operation
 
-Run commands from the Shorts Studio clone unless stated otherwise. The UI and default analysis workflow currently use Russian. [README](../README.md) gives the short introduction.
+Run commands from the Studio clone unless stated otherwise. There are two separate local editors: Shorts (`./start.command`) and podcast montage (`./start-podcast.command /absolute/recording-folder`). Both UIs use Russian. The [README](../README.md) compares them, and the [podcast guide](podcast-editing.md) covers manual full-episode editing.
 
 ## Requirements
 
 | Component | When needed | Notes |
 | --- | --- | --- |
 | Node.js 24 or newer | Always | Pinned to 24.22.2 with mise. |
-| FFmpeg with `libx264`, AAC, and `subtitles`/libass | Import and rendering | Pinned to 8.1.2 with mise on macOS. A plain `ffmpeg -version` check does not establish subtitle support. |
-| ffprobe | Recommended | Included with the pinned FFmpeg. Studio has an FFmpeg probing fallback. |
-| Authenticated Codex CLI | Candidate selection | Uses its own login. Account access and usage limits apply. |
-| Python 3.9 or newer | Local speech recognition and transcript adapter | Standard library only; not required to import already supported transcript JSON. |
-| whisper.cpp and a model | Recognition when no transcript is available | The included setup helper builds v1.9.1 and downloads multilingual large-v3. |
+| FFmpeg with `libx264` and AAC; `subtitles`/libass for Shorts captions | Import and rendering | Pinned to 8.1.2 with mise on macOS. A plain `ffmpeg -version` check does not establish subtitle support. |
+| ffprobe | Required for podcast montage; recommended for Shorts | Included with pinned FFmpeg. Only Shorts has an FFmpeg probing fallback. |
+| Authenticated Codex CLI | Shorts candidate selection only | Uses its own login. Account access and usage limits apply. |
+| Python 3.9 or newer | Shorts local recognition and transcript adapter | Standard library only; not required to import already supported transcript JSON. |
+| whisper.cpp and a model | Shorts recognition when no transcript is available | The included setup helper builds v1.9.1 and downloads multilingual large-v3. |
 | Git, CMake, C++ compiler, curl or wget | Building Whisper | Needed only for its setup helper. On macOS, a compiler is available through Xcode Command Line Tools. |
 
-No runtime npm dependencies are required. Tool installation needs network access. Recognition and rendering run locally; Codex selection sends transcript text and the recording title to Codex.
+No runtime npm dependencies are required. Tool installation needs network access. Podcast montage needs only Node.js, FFmpeg, and ffprobe and works offline after installation. Shorts recognition and rendering run locally; its Codex selection sends transcript text and the recording title to Codex.
 
 ## macOS with mise
 
 Install [mise](https://mise.jdx.dev/installing-mise.html) 2026.11.2 or newer, clone the project, and inspect `mise.toml` before trusting it:
 
 ```sh
-git clone https://github.com/polomodov/shorts-studio.git
-cd shorts-studio
+git clone https://github.com/polomodov/video-studio.git
+cd video-studio
 mise trust
 mise install
 ./start.command
@@ -41,7 +41,17 @@ mise exec -- ffmpeg -filters
 
 Check that the filters include `subtitles`.
 
-## Codex login
+## Start the podcast editor
+
+After setting up Node.js, FFmpeg, and ffprobe, run:
+
+```sh
+./start-podcast.command /absolute/path/to/recording-folder
+```
+
+Use its printed local URL, separate from any running Shorts UI. This workflow does not need the Codex or Whisper setup below. The folder is scanned for top-level video files and WAV audio; new projects/exports are stored in its `.video-studio-montage` sidecar. A sole existing `.apollo-montage` sidecar is reused, while two competing sidecars produce an error. Read [podcast editing](podcast-editing.md) before saving an existing assembly, setting external audio timing, or exporting.
+
+## Codex login for Shorts
 
 Install the [Codex CLI](https://github.com/openai/codex) and sign in using its documented login flow. Confirm the local command is available:
 
@@ -56,7 +66,7 @@ The extraction was checked with Codex CLI `0.166.0-alpha.5.1`; this records the 
 
 If selection fails, first check login status and account limits. Older CLI builds may not recognize the isolation flags used in `src/codex.mjs`; update a compatible CLI rather than disabling the isolation settings. The tool never treats fabricated candidates as a successful Codex result.
 
-## Use an existing transcript
+## Use an existing transcript in Shorts
 
 This path skips Whisper and its model download. The CLI accepts either:
 
@@ -100,7 +110,7 @@ The original server can stay open because the new pass uses a different root and
 
 The browser's `POST /api/jobs` starts preparation automatically and cannot attach an external transcript in the same request.
 
-## Install local Whisper
+## Install local Whisper for Shorts
 
 Skip this section when you have a suitable transcript. The helper downloads about **3 GB** of model weights and compiles whisper.cpp, so the first setup takes time and additional disk space. Review the helper before running it. It verifies the pinned source revision and model checksum.
 
@@ -146,7 +156,7 @@ If a tool is installed outside `PATH`, set its absolute executable path:
 
 The optional `~/.cache/shorts-studio/bin` directory is also searched for local media tools. An explicit override is authoritative: if it is invalid, Studio reports an error rather than silently choosing a different executable.
 
-## Data directories and existing jobs
+## Shorts data directories and existing jobs
 
 The default is `~/.cache/shorts-studio`. Keep it outside a Git repository. Specify another directory on every related command:
 

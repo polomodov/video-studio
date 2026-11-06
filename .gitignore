@@ -24,3 +24,6 @@ models/
 *.log
 mise.local.toml
 mise.local.lock
+
+.video-studio-montage/
+.apollo-montage/

@@ -1,15 +1,22 @@
 {
-  "name": "shorts-studio",
+  "name": "video-studio",
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
-  "description": "Local video clipping, framing and captions with transcript-assisted selection",
+  "description": "Local podcast editing and captioned vertical clips",
   "type": "module",
-  "engines": { "node": ">=24" },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "start": "./start.command",
-    "test": "node --test src/*.test.mjs",
-    "smoke": "node scripts/smoke.mjs"
+    "test": "node --test src/*.test.mjs podcast/*.test.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "podcast": "./start-podcast.command",
+    "smoke:podcast": "node scripts/smoke-podcast.mjs"
   },
-  "repository": { "type": "git", "url": "https://github.com/polomodov/shorts-studio.git" }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polomodov/video-studio.git"
+  }
 }

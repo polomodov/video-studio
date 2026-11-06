@@ -11,14 +11,14 @@ const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   help: { type: 'boolean', short: 'h' },
 } });
 const command = positionals[0] ?? 'serve';
-const help = `Shorts — локальный отбор и монтаж\n\n  node src/cli.mjs serve [--port 4317] [--root /absolute/cache]\n  node src/cli.mjs import --source /absolute/video.mp4 [--transcript /absolute/whisper.json]\n  node src/cli.mjs analyze JOB_ID\n\nИмпорт запускает распознавание и Codex. Выбор и монтаж доступны в браузере.\nВидео и результаты хранятся локально; расшифровка передаётся Codex через вашу авторизацию.\n`;
+const help = `Video Studio — шортсы: локальный отбор и монтаж\n\n  node src/cli.mjs serve [--port 4317] [--root /absolute/cache]\n  node src/cli.mjs import --source /absolute/video.mp4 [--transcript /absolute/whisper.json]\n  node src/cli.mjs analyze JOB_ID\n\nИмпорт запускает распознавание и Codex. Выбор и монтаж доступны в браузере.\nВидео и результаты хранятся локально; расшифровка передаётся Codex через вашу авторизацию.\n`;
 try {
   if (values.help) { console.log(help); }
   else if (command === 'serve' || command === 'start') {
     const port = Number(values.port);
     if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('Неверный порт.');
     const { close, url } = await startServer({ root: values.root, port });
-    console.log(`Shorts Studio: ${url}\nОставьте это окно открытым. Остановка: Ctrl+C.`);
+    console.log(`Video Studio / Shorts: ${url}\nОставьте это окно открытым. Остановка: Ctrl+C.`);
     let stopping = false;
     for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, async () => { if (stopping) return; stopping = true; await close(); process.exit(0); });
   } else if (command === 'import' || command === 'analyze') {

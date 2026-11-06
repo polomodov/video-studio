@@ -1,0 +1,4 @@
+interface:
+  display_name: "Video Studio · Podcast montage"
+  short_description: "Cut full episodes with cameras and external WAV audio"
+  default_prompt: "Use $podcast-montage to open my recording folder, apply the edits I marked, and preview the junctions before exporting the episode."
