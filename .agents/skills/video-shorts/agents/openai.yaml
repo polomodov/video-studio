@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shorts Studio"
+  short_description: "Edit local videos into captioned vertical clips"
+  default_prompt: "Use $video-shorts to prepare candidates from my video and timed transcript, then open Shorts Studio for me to review and edit."

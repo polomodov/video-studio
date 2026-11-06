@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="Локальная мастерская коротких видео: найдите фрагмент, сохраните мысль, соберите шортс.">
+    <title>Shorts Studio — мастерская шортсов</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Shorts Studio — мастерская шортсов">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-wordmark">Shorts<span class="brand-divider">/</span><span class="brand-product">Studio</span></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="local-indicator"><i aria-hidden="true"></i> На этом компьютере</span>
+        <button id="open-import" class="button button-light" type="button"><span aria-hidden="true">＋</span> Добавить видео</button>
+      </div>
+    </header>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="dismiss-notice" class="icon-button" aria-label="Закрыть сообщение" type="button">×</button></div>
+
+    <main class="shell">
+      <aside class="sidebar" aria-label="Выпуски и фрагменты">
+        <section class="library">
+          <div class="section-heading"><h2>Выпуски</h2><span id="job-count" class="quiet-count">0</span></div>
+          <div id="job-list" class="job-list"><p class="muted small">Загружаем выпуски…</p></div>
+        </section>
+        <section class="candidate-section" aria-labelledby="candidate-heading">
+          <div class="section-heading"><h2 id="candidate-heading">Фрагменты</h2><span id="candidate-count" class="quiet-count">0</span></div>
+          <p id="candidate-intro" class="sidebar-description">Здесь появятся идеи для коротких видео.</p>
+          <div id="candidate-list" class="candidate-list"></div>
+          <div id="candidate-placeholder" class="candidate-placeholder"><span class="placeholder-lines" aria-hidden="true"><i></i><i></i><i></i></span><p>Добавьте выпуск,<br>чтобы найти первые фрагменты.</p></div>
+        </section>
+        <div class="sidebar-footer"><span class="privacy-dot" aria-hidden="true"></span><p>Видео остаётся локально.<br>Codex получает расшифровку для отбора.</p></div>
+      </aside>
+
+      <section class="workspace" aria-label="Редактор фрагмента">
+        <div id="empty-state" class="empty-state">
+          <span class="eyebrow">ИЗ ДЛИННОГО ВЫПУСКА — В КОРОТКУЮ ИСТОРИЮ</span>
+          <h1>Хорошая мысль.<br><span>Её стоит услышать.</span></h1>
+          <p>Добавьте видео. Codex предложит фрагменты,<br class="desktop-break"> а вы выберете те, которые станут шортсами.</p>
+          <button id="empty-import" class="button button-primary" type="button">Добавить первый выпуск <span aria-hidden="true">↗</span></button>
+          <button id="retry-load" class="button button-quiet" type="button" hidden>Повторить подключение</button>
+          <div class="empty-steps"><span><b>01</b> Найти мысль</span><span><b>02</b> Выбрать фрагмент</span><span><b>03</b> Собрать ролик</span></div>
+        </div>
+
+        <div id="job-workspace" hidden>
+          <div class="workspace-heading">
+            <div class="workspace-title-group"><div class="eyebrow">МАСТЕРСКАЯ ШОРТСОВ <span class="eyebrow-line"></span></div><h1 id="job-title"></h1><p id="job-meta" class="job-meta"></p></div>
+            <span id="job-status" class="status-badge"></span>
+          </div>
+
+          <section id="progress-panel" class="progress-panel" aria-live="polite" hidden>
+            <div class="progress-symbol" aria-hidden="true"><span></span></div>
+            <div class="progress-copy"><h2 id="progress-title"></h2><p id="progress-text"></p><progress id="progress-meter" max="100" hidden></progress></div>
+            <button id="retry-job" class="button button-light" type="button" hidden>Попробовать снова</button>
+          </section>
+
+          <div class="editor-grid">
+            <div class="stage-column">
+              <section class="video-section" aria-label="Просмотр видео">
+                <div class="stage-heading"><div class="view-tabs" role="tablist" aria-label="Версия видео"><button id="source-tab" role="tab" aria-selected="true" aria-controls="source-view" class="view-tab active" type="button">Исходник</button><button id="export-tab" role="tab" aria-selected="false" aria-controls="export-view" class="view-tab" type="button" disabled>Готовый ролик <span id="export-dot" class="export-dot" hidden></span></button></div><span id="source-resolution" class="technical-label"></span></div>
+                <div id="source-view" role="tabpanel" aria-labelledby="source-tab">
+                  <div class="source-frame">
+                    <video id="source-video" controls preload="metadata" playsinline aria-label="Исходное видео"></video>
+                    <div id="crop-guide" class="crop-guide" hidden><span>9:16</span></div>
+                    <div id="composition-guides" class="composition-guides" aria-label="Области компоновки" hidden><div id="heading-guide" class="composition-guide heading-guide"><span>Заголовок</span></div><div id="slide-guide" class="composition-guide slide-guide"><span>Слайд</span></div><div id="speaker-guide" class="composition-guide speaker-guide"><span>Ведущий</span></div></div>
+                  </div>
+                  <p id="presentation-preview-hint" class="input-hint" hidden>Проверьте области в начале, середине и конце фрагмента: при смене сцены разметку нужно уточнить.</p>
+                </div>
+                <div id="export-view" role="tabpanel" aria-labelledby="export-tab" hidden><div class="export-frame"><video id="export-video" controls preload="auto" playsinline aria-label="Готовый вертикальный ролик"></video></div></div>
+                <div class="playback-toolbar"><div class="playback-actions"><button id="play-clip" class="button button-small button-light" type="button" disabled><span aria-hidden="true">▶</span> Фрагмент</button><button id="play-context" class="button button-small button-quiet" type="button" disabled>С контекстом <span class="context-hint">±10 сек</span></button></div><span id="player-time" class="timecode">00:00</span></div>
+                <p id="media-error" class="inline-error" role="alert" hidden></p>
+              </section>
+
+              <section id="clip-story" class="clip-story" hidden>
+                <div class="story-heading"><span class="eyebrow">ПОЧЕМУ ЭТОТ ФРАГМЕНТ</span><span id="clip-number" class="technical-label"></span></div>
+                <h2 id="clip-title"></h2><p id="clip-reason"></p>
+                <blockquote id="clip-hook" hidden></blockquote>
+                <p id="clip-caution" class="caution" hidden></p>
+              </section>
+
+              <section id="caption-section" class="caption-section" hidden>
+                <div class="section-heading"><h2>Текст и субтитры</h2><span id="caption-count" class="technical-label"></span></div>
+                <p class="muted small caption-help">Исправьте имена и термины. Изменения попадут в субтитры выбранного ролика.</p>
+                <div id="caption-list" class="caption-list"></div>
+              </section>
+
+              <section id="export-section" class="export-section" hidden><div><span class="eyebrow">ГОТОВО К ПРОСМОТРУ</span><h2>Ваш короткий ролик</h2><p id="export-note" class="muted small">Посмотрите его целиком перед публикацией.</p></div><div id="export-links" class="export-links"></div></section>
+            </div>
+
+            <aside class="inspector" aria-labelledby="inspector-heading">
+              <div class="inspector-heading"><h2 id="inspector-heading">Монтаж</h2><span class="format-label">9:16</span></div>
+              <div id="inspector-empty" class="inspector-empty"><span aria-hidden="true">↖</span><p>Откройте фрагмент,<br>чтобы уточнить монтаж.</p></div>
+              <form id="clip-form" hidden novalidate>
+                <label class="field-label" for="edit-title">Название</label><textarea id="edit-title" rows="2" maxlength="200" class="title-input"></textarea>
+                <div class="range-heading"><span class="field-label">Границы фрагмента</span><span id="clip-duration" class="duration-tag"></span></div>
+                <div class="time-fields"><label for="edit-start"><span>Начало</span><input id="edit-start" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="00:00"></label><span class="time-arrow" aria-hidden="true">→</span><label for="edit-end"><span>Конец</span><input id="edit-end" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="00:00"></label></div>
+                <p class="input-hint">Минуты:секунды или время в секундах.</p>
+                <p id="range-error" class="inline-error" role="status" hidden></p>
+                <fieldset class="layout-field"><legend class="field-label">Кадрирование</legend><div class="layout-options"><label class="layout-option"><input id="layout-fit" type="radio" name="layout" value="fit" checked><span class="layout-icon layout-icon-fit" aria-hidden="true"><i></i></span><span>Весь кадр</span></label><label class="layout-option"><input id="layout-crop" type="radio" name="layout" value="crop"><span class="layout-icon layout-icon-crop" aria-hidden="true"><i></i></span><span>Крупный план</span></label><label class="layout-option"><input id="layout-duo" type="radio" name="layout" value="duo"><span>Два участника</span></label><label class="layout-option"><input id="layout-slide-speaker" type="radio" name="layout" value="slide-speaker"><span>Слайд + спикер</span></label><label hidden id="layout-presentation-option" class="layout-option layout-option-presentation" title="Сначала нужно выделить области слайда и ведущего"><input id="layout-presentation" type="radio" name="layout" value="presentation" aria-describedby="layout-presentation-hint" disabled><span class="layout-icon layout-icon-presentation" aria-hidden="true"><i></i><i></i></span><span>Слайд + спикер + заголовок</span></label></div><p id="layout-description" class="input-hint">Сохраняем спикера, слайды и весь исходный кадр.</p><p id="layout-presentation-hint" class="input-hint">Для «Слайд + ведущий» сначала нужно выделить области слайда и ведущего.</p></fieldset>
+                <div id="crop-control" class="crop-control" hidden><label for="edit-crop" class="field-label">Положение кадра</label><input id="edit-crop" type="range" min="0" max="100" step="1" value="50"><div class="range-labels"><span>Левее</span><span>Правее</span></div></div>
+                <section class="template-panel" aria-labelledby="template-heading"><div class="template-heading"><label id="template-heading" class="field-label" for="layout-template">Шаблоны</label><button id="refresh-templates" class="template-refresh" type="button" aria-label="Обновить список шаблонов" title="Обновить список шаблонов">↻</button></div><div class="template-apply-row"><select id="layout-template" aria-describedby="template-help"><option value="">Загружаем шаблоны…</option></select><button id="apply-template" class="button button-small button-light" type="button" disabled>Применить</button></div><p id="template-help" class="input-hint">Переносит только компоновку. Проверьте рамки на исходнике перед сборкой.</p><div id="template-save-fields" class="template-save-fields" hidden><label class="field-label" for="template-name">Название шаблона</label><input id="template-name" type="text" maxlength="120" value="Слайд + ведущий" autocomplete="off"><button id="save-template" class="button button-small button-light" type="button">Сохранить как шаблон</button></div><p id="template-status" class="template-status" role="status" aria-live="polite" hidden></p></section>
+                <div class="captions-setting"><div><label class="field-label" for="edit-captions">Субтитры на видео</label><p class="input-hint">По фразам, без лишней анимации.</p></div><label class="switch"><input id="edit-captions" type="checkbox" checked aria-label="Показывать субтитры на видео"><span aria-hidden="true"></span></label></div>
+                <button id="save-clip" class="button button-save" type="submit" disabled>Правки сохранены <span aria-hidden="true">✓</span></button>
+                <p id="save-status" class="save-status" aria-live="polite"></p>
+              </form>
+              <div class="render-panel"><div class="render-summary"><span>Выбрано фрагментов</span><strong id="selected-count">0</strong></div><button id="render-selected" class="button button-primary render-button" type="button" disabled>Собрать выбранные <span aria-hidden="true">↗</span></button><p id="render-help" class="input-hint">Отметьте фрагменты слева. Сборка начнётся по вашей команде.</p><div id="render-status" class="render-status" aria-live="polite" hidden></div></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="import-dialog" aria-labelledby="import-heading"><form id="import-form"><div class="dialog-heading"><span class="eyebrow">НОВЫЙ ВЫПУСК</span><button id="close-import" class="icon-button" type="button" aria-label="Закрыть окно">×</button></div><h2 id="import-heading">Начнём с исходника.</h2><p>Укажите полный путь к видео на этом компьютере.</p><label class="field-label" for="source-path">Путь к файлу</label><textarea id="source-path" rows="3" required spellcheck="false" autocomplete="off" placeholder="/Users/имя/Downloads/мой-выпуск.mp4"></textarea><p class="input-hint">На Mac: выберите файл в Finder, нажмите ⌥⌘C и вставьте путь сюда.</p><div class="import-privacy"><span aria-hidden="true">↗</span><p>Видео обрабатывается локально. Расшифровка отправляется в Codex, чтобы предложить фрагменты.</p></div><p id="import-error" class="inline-error" role="alert" hidden></p><button id="submit-import" class="button button-primary" type="submit">Найти фрагменты <span aria-hidden="true">→</span></button></form></dialog>
+  </body>
+</html>

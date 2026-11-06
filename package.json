@@ -1,0 +1,15 @@
+{
+  "name": "shorts-studio",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "description": "Local video clipping, framing and captions with transcript-assisted selection",
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "start": "./start.command",
+    "test": "node --test src/*.test.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "repository": { "type": "git", "url": "https://github.com/polomodov/shorts-studio.git" }
+}
