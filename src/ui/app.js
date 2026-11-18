@@ -401,6 +401,8 @@ function syncInspector(candidate, force = false) {
   $('presentation-preview-hint').hidden = !compositeLayout(item.layout);
   $('save-clip').disabled = !draft || state.busy || locked || Boolean(problem);
   $('save-clip').textContent = state.savingIds.has(candidate.id) ? 'Сохраняем…' : draft ? 'Сохранить правки' : 'Правки сохранены ✓';
+  $('save-transcript').disabled = $('save-clip').disabled;
+  $('save-transcript').textContent = $('save-clip').textContent;
   $('save-status').textContent = draft ? 'Есть несохранённые изменения.' : '';
   sourcePlayback?.update();
   renderCrop(item);
@@ -424,6 +426,10 @@ function renderCaptions(candidate) {
   const end = Number.isFinite(item.end) ? item.end : candidate.end;
   const segments = (state.job.segments || []).filter((segment) => segment.end > start && segment.start < end);
   const container = $('caption-list');
+  const first = segments[0];
+  const hook = first ? item.captionEdits?.[first.id] ?? first.text : '';
+  $('clip-hook').textContent = hook;
+  $('clip-hook').hidden = !hook;
   $('caption-count').textContent = `${segments.length} фраз`;
   const ids = new Set();
   segments.forEach((segment, index) => {
@@ -445,6 +451,7 @@ function renderCaptions(candidate) {
       input.addEventListener('input', () => {
         if (!activeCandidate()) return;
         ensureDraft().captionEdits[segment.id] = input.value;
+        renderCaptions(activeCandidate());
         renderActionState();
         syncInspector(activeCandidate());
       });
@@ -514,6 +521,7 @@ function renderActionState() {
   $('render-help').textContent = running.length ? 'Можно продолжать просмотр. Готовые ролики появятся в своих карточках.' : selected.length ? 'Перед сборкой сохраним правки выбранных фрагментов.' : 'Отметьте фрагменты слева. Сборка начнётся по вашей команде.';
   $('play-clip').disabled = !activeCandidate();
   $('play-context').disabled = !activeCandidate();
+  $('edit-transcript').disabled = !activeCandidate();
   const candidate = activeCandidate();
   const renderStatus = candidate?.renderStatus;
   $('render-status').hidden = !renderStatus || renderStatus === 'idle';
@@ -543,8 +551,6 @@ function renderActive() {
   $('clip-number').textContent = `${String(state.job.candidates.indexOf(candidate) + 1).padStart(2, '0')} / ${String(state.job.candidates.length).padStart(2, '0')}`;
   $('clip-title').textContent = item.title;
   $('clip-reason').textContent = readableContext(candidate.reason) || 'Посмотрите фрагмент и проверьте, понятна ли мысль без полного выпуска.';
-  $('clip-hook').textContent = candidate.hook || '';
-  $('clip-hook').hidden = !candidate.hook;
   const caution = candidate.caution || candidate.contextRisk;
   $('clip-caution').textContent = caution ? `Контекст: ${readableContext(caution)}` : '';
   $('clip-caution').hidden = !caution;
@@ -785,6 +791,11 @@ for (const tab of [$('source-tab'), $('export-tab')]) tab.addEventListener('keyd
 });
 $('play-clip').addEventListener('click', () => playCandidate(false));
 $('play-context').addEventListener('click', () => playCandidate(true));
+$('edit-transcript').addEventListener('click', () => {
+  const field = $('caption-list').querySelector('textarea:enabled') ?? $('transcript-heading');
+  field.focus({ preventScroll: true });
+  $('caption-section').scrollIntoView({ block: 'start' });
+});
 $('edit-title').addEventListener('input', (event) => editField('title', event.target.value));
 $('edit-start').addEventListener('input', (event) => editField('start', event.target.value));
 $('edit-end').addEventListener('input', (event) => editField('end', event.target.value));

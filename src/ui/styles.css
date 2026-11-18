@@ -138,7 +138,7 @@ button, input, textarea { transition: background-color 120ms, border-color 120ms
 .export-frame { background: #101210; border: 1px solid var(--line); border-radius: 9px; display: flex; align-items: center; justify-content: center; min-height: 320px; }
 .export-frame video { height: min(62vh, 610px); max-width: 100%; display: block; }
 .playback-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.playback-actions { display: flex; align-items: center; gap: 6px; }
+.playback-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .context-hint { color: var(--faint); font-size: 9px; }
 .timecode { font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
 .clip-story { padding-top: 26px; }
@@ -149,6 +149,7 @@ button, input, textarea { transition: background-color 120ms, border-color 120ms
 .caution { color: #d4b58b; font-size: 11px; background: #332c225c; padding: 11px 13px; border-left: 2px solid #886b47; margin-top: 17px; line-height: 1.8; }
 .caption-section { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); }
 .caption-help { margin-top: 7px; }
+#save-transcript { margin-top: 12px; }
 .caption-list { margin-top: 16px; max-height: 330px; overflow: auto; padding-right: 8px; display: grid; gap: 10px; }
 .caption-row { display: grid; grid-template-columns: 49px minmax(0, 1fr); gap: 11px; align-items: start; }
 .caption-time { font: 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--faint); border: 0; padding: 11px 0; text-align: left; background: transparent; }
