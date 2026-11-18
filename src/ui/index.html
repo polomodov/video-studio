@@ -73,7 +73,7 @@
                   <p id="presentation-preview-hint" class="input-hint" hidden>Проверьте области в начале, середине и конце фрагмента: при смене сцены разметку нужно уточнить.</p>
                 </div>
                 <div id="export-view" role="tabpanel" aria-labelledby="export-tab" hidden><div class="export-frame"><video id="export-video" controls preload="auto" playsinline aria-label="Готовый вертикальный ролик"></video></div></div>
-                <div class="playback-toolbar"><div class="playback-actions"><button id="play-clip" class="button button-small button-light" type="button" disabled><span aria-hidden="true">▶</span> Фрагмент</button><button id="play-context" class="button button-small button-quiet" type="button" disabled>С контекстом <span class="context-hint">±10 сек</span></button></div><span id="player-time" class="timecode">00:00</span></div>
+                <div class="playback-toolbar"><div class="playback-actions"><button id="play-clip" class="button button-small button-light" type="button" disabled><span aria-hidden="true">▶</span> Фрагмент</button><button id="play-context" class="button button-small button-quiet" type="button" disabled>С контекстом <span class="context-hint">±10 сек</span></button><button id="edit-transcript" class="button button-small button-light" type="button" disabled>Править транскрипт</button></div><span id="player-time" class="timecode">00:00</span></div>
                 <p id="media-error" class="inline-error" role="alert" hidden></p>
               </section>
 
@@ -85,9 +85,10 @@
               </section>
 
               <section id="caption-section" class="caption-section" hidden>
-                <div class="section-heading"><h2>Текст и субтитры</h2><span id="caption-count" class="technical-label"></span></div>
-                <p class="muted small caption-help">Исправьте имена и термины. Изменения попадут в субтитры выбранного ролика.</p>
+                <div class="section-heading"><h2 id="transcript-heading" tabindex="-1">Транскрипт шортса</h2><span id="caption-count" class="technical-label"></span></div>
+                <p class="muted small caption-help">Нажмите на время, чтобы прослушать фразу. Исправленный текст появится в субтитрах этого шортса.</p>
                 <div id="caption-list" class="caption-list"></div>
+                <button id="save-transcript" form="clip-form" class="button button-small button-light" type="submit" disabled>Сохранить правки</button>
               </section>
 
               <section id="export-section" class="export-section" hidden><div><span class="eyebrow">ГОТОВО К ПРОСМОТРУ</span><h2>Ваш короткий ролик</h2><p id="export-note" class="muted small">Посмотрите его целиком перед публикацией.</p></div><div id="export-links" class="export-links"></div></section>
